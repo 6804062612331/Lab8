@@ -1,7 +1,9 @@
 #include <stdio.h>
-int checkscore(char std[],char K[]);
+int checkscore(char std[],char K[],int *F);
 int main() {
-    int i,j;
+    int i,j,firstcorrect = 0;
+    int *fc;
+    fc = &firstcorrect;
     char ans[8][10]={
         {'A','B','A','C','C','D','E','E','A','D'},//7
 		{'D','B','A','B','C','A','E','E','A','D'},//6
@@ -14,14 +16,18 @@ int main() {
 
 	char keys[10]={'D','B','D','C','C','D','A','E','A','D'};
 	for(i=0;i<8;i++){
-    	printf("std %d => %d\n", (i+1), checkscore(ans[i],keys));
+    	printf("std %d => %d\n", (i+1), checkscore(ans[i],keys,&firstcorrect));
 	}
+    printf("number of no.1 = %d\n",*fc);
 }
-int checkscore(char std[],char K[]){
+int checkscore(char std[],char K[],int *F){
 	int result=0;
 	for(int i=0;i<10;i++){
 		if(std[i]==K[i]){
 			result +=1;
+            if(i==0){
+                *F += 1;
+            }
 		}
 	}
 	return result;
